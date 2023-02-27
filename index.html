@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Locatio</title>
+</head>
+<body>
+	<h1>Locatio/Adress</h1>
+	<form>
+		<label for="counties">Select a county:</label>
+		<select id="counties" onchange="populateTowns()">
+			<option value="">Select a county</option>
+			<option value="Mombasa">Mombasa</option>
+      <option value="Kwale">Kwale</option>
+      <option value="Kilifi">Kilifi</option>
+      <option value="Tana_River">Tana River</option>
+      <option value="Lamu">Lamu</option>
+      <option value="Taita_Taveta">Taita-Taveta</option>
+      <option value="Garissa">Garissa</option>
+      <option value="Wajir">Wajir</option>
+      <option value="Mandera">Mandera</option>
+      <option value="Marsabit">Marsabit</option>
+      <option value="Isiolo">Isiolo</option>
+      <option value="Meru">Meru</option>
+      <option value="Tharaka_Nithi">Tharaka-Nithi</option>
+      <option value="Embu">Embu</option>
+      <option value="Kitui">Kitui</option>
+      <option value="Machakos">Machakos</option>
+      <option value="Makueni">Makueni</option>
+      <option value="Nyandarua">Nyandarua</option>
+      <option value="Nyeri">Nyeri</option>
+      <option value="Kirinyaga">Kirinyaga</option>
+      <option value="Muranga">Murang’a</option>
+      <option value="Kiambu">Kiambu</option>
+      <option value="Turkana">Turkana</option>
+      <option value="West_Pokot">West Pokot</option>
+      <option value="Samburu">Samburu</option>
+      <option value="Trans_Nzoia">Trans Nzoia</option>
+      <option value="Uasin_Gishu">Uasin Gishu</option>
+      <option value="Elgeyo_Marakwet">Elgeyo-Marakwet</option>
+      <option value="Nandi">Nandi</option>
+      <option value="Baringo">Baringo</option>
+      <option value="Laikipia">Laikipia</option>
+      <option value="Nakuru">Nakuru</option>
+      <option value="Narok">Narok</option>
+      <option value="Kajiado">Kajiado</option>
+      <option value="Kericho">Kericho</option>
+      <option value="Bomet">Bomet</option>
+      <option value="Kakamega">Kakamega</option>
+      <option value="Vihiga">Vihiga</option>
+      <option value="Bungoma">Bungoma</option>
+      <option value="Busia">Busia</option>
+      <option value="Siaya">Siaya</option>
+      <option value="Kisumu">Kisumu</option>
+      <option value="Homa_Bay">Homa Bay</option>
+      <option value="Migori">Migori</option>
+      <option value="Kisii">Kisii</option>
+      <option value="Nyamira">Nyamira</option>
+      <option value="Nairobi">Nairobi</option>
+			<!-- add more counties here -->
+		</select>
+
+		<label for="towns">Select a town:</label>
+		<select id="towns">
+			<option value="">Select a town</option>
+		</select>
+		
+		
+	</form>
+<style>
+	body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		h1 , h2{
+			text-align: center;
+			margin-top: 50px;
+		}
+		form {
+			max-width: 500px;
+			margin: 50px auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			background-color: #f9f9f9;
+		}
+		label {
+			display: block;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+		select {
+			display: block;
+			margin-bottom: 20px;
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			width: 100%;
+			box-sizing: border-box;
+			font-size: 16px;
+		}
+		select:focus {
+			outline: none;
+			border-color: #4da6ff;
+		}
+		option {
+			color: #333;
+		}
+</style>
+<script>
+	const townsByCounty = {
+		Nairobi: ["Nairobi CBD", "Westlands", "Kilimani", "Kasarani", "Lang'ata"],
+   Mombasa: ["Mombasa Island", "Nyali", "Bamburi", "Kisauni", "Likoni"],
+   Kwale: ["Kwale Town", "Ukunda", "Msambweni", "Lungalunga", "Kinango"],
+  Kilifi: ["Kilifi Town", "Malindi", "Watamu", "Kilifi North", "Kilifi South"],
+  Tana_River: ["Hola", "Garsen", "Madogo", "Bangale", "Kipini"],
+  Lamu: ["Lamu Town", "Mokowe", "Faza", "Kiunga", "Mpeketoni"],
+  Taita_Taveta: ["Voi", "Wundanyi", "Mwatate", "Taveta", "Mbololo"],
+  Garissa: ["Garissa Town", "Balambala", "Hulugho", "Ijara", "Lagdera"],
+  Wajir: ["Wajir Town", "Bute", "Eldas", "Griftu", "Mandera East"],
+  Mandera: ["Mandera Town", "Banisa", "Lafey", "Mandera West", "Mandera North"],
+  Marsabit: ["Marsabit Town", "Laisamis", "Loiyangalani", "Moyale", "North Horr"],
+  Isiolo: ["Isiolo Town", "Garbatulla", "Merti", "Isiolo North", "Isiolo South"],
+  Meru: ["Meru Town", "Imenti", "Tigania", "Buuri", "Tharaka"],
+  Tharaka_Nithi: ["Chuka", "Maara", "Tharaka", "Igembe South", "Igembe Central"],
+  Embu: ["Embu Town", "Runyenjes", "Mbeere South", "Mbeere North", "Manyatta"],
+  Kitui: ["Kitui Town", "Mwingi", "Mutomo", "Kitui South", "Kitui West"],
+  Machakos: ["Machakos Town", "Kathiani", "Mwala", "Kangundo"],
+  Makueni: ["Wote", "Makindu", "Emali", "Sultan Hamud"],
+  Nyandarua: ["Ol Kalou", "Ndaragwa", "Engineer", "Kinangop"],
+  Nyeri: ["Nyeri Town", "Othaya", "Mweiga", "Karatina"],
+  Kirinyaga: ["Kerugoya", "Sagana", "Kutus", "Wang'uru"],
+  Muranga: ["Murang'a Town", "Kenol", "Kigumo", "Maragua"],
+  Kiambu: ["Kiambu Town", "Thika", "Ruiru", "Limuru"],
+  Turkana: ["Lodwar", "Kakuma", "Lokichar", "Nakwamekwi"],
+	West_Pokot: ["Kapenguria", "Lelan", "Sigor", "Chepareria"],
+  Samburu: ["Maralal", "Baragoi", "Wamba", "Archers Post"],
+  Trans_Nzoia: ["Kitale", "Kapenguria", "Kiminini", "Endebess"],
+  Uasin_Gishu: ["Eldoret", "Turbo", "Kapsabet", "Moiben"],
+  Elgeyo_Marakwet: ["Iten", "Kapsowar", "Tot", "Sambirir"],
+  Nandi: ["Kapsabet", "Nandi Hills", "Kabiyet", "Mosoriot"],
+  Baringo: ["Kabarnet", "Eldama Ravine", "Marigat", "Mogotio"],
+  Laikipia: ["Nanyuki", "Doldol", "Rumuruti", "Kinamba"],
+Nakuru: ["Nakuru Town", "Naivasha", "Molo", "Gilgil"],
+Narok: ["Narok Town", "Mai Mahiu", "Narok North", "Narok East"],
+Kajiado: ["Kajiado Town", "Ngong", "Kiserian", "Ongata Rongai"],
+Kericho: ["Kericho Town", "Litein", "Soin", "Londiani"],
+Bomet: ["Bomet Town", "Longisa", "Ndanai", "Chemaner"],
+Kakamega: ["Kakamega Town", "Lugulu", "Malava", "Ikolomani"],
+Vihiga: ["Majengo", "Chavakali", "Mbale", "Luanda"],
+Bungoma: ["Bungoma Town", "Webuye", "Chwele", "Kimilili"],
+Busia: ["Busia Town", "Malaba", "Nambale", "Butula"],
+Siaya: ["Siaya Town", "Bondo", "Ugunja", "Alego"],
+Kisumu: ["Kisumu City", "Muhoroni", "Kisumu East", "Kisumu West"],
+Homa_Bay: ["Homa Bay Town", "Oyugis", "Mbita", "Kendu Bay"],
+Migori: ["Migori Town", "Awendo", "Sori", "Rongo"],
+Kisii: ["Kisii Town", "Ogembo", "Iyabe", "Keumbu"],
+Nyamira: ["Nyamira Town", "Masaba", "Keroka", "Magwagwa"]
+  // add more towns for each county here
+		};
+
+		function populateTowns() {
+			const countySelect = document.getElementById("counties");
+			const townSelect = document.getElementById("towns");
+			const selectedCounty = countySelect.value;
+
+			// clear the current options in the towns dropdown
+			townSelect.innerHTML = '<option value="">Select a town</option>';
+
+			// populate the towns dropdown with the towns for the selected county
+			if (selectedCounty) {
+				const towns = townsByCounty[selectedCounty];
+				for (let i = 0; i < towns.length; i++) {
+					const option = document.createElement("option");
+					option.text = towns[i];
+					option.value = towns[i];
+					townSelect.add(option);
+				}
+			}
+		}
+		// JavaScript code here
+</script>
+
+</body>
+</html>
